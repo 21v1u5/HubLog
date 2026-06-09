@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HubLog OS — RotaVerde</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    safelist: [
+      "text-error","text-secondary","text-primary","text-tertiary","text-outline","text-outline-variant","text-on-surface",
+      "border-error/30","border-error/20","border-secondary/30","border-primary/30","border-tertiary/30","border-white/10","border-white/5",
+      "bg-error/10","bg-error/5","bg-secondary/10","bg-secondary/5","bg-primary/10","bg-primary/5","bg-tertiary/10","bg-white/5","bg-white/3"
+    ],
+    theme: {
+      extend: {
+        colors: {
+          "surface-variant": "#353534",
+          "on-primary-fixed-variant": "#0035bd",
+          "outline-variant": "#434656",
+          "surface-container": "#201f1f",
+          "error-container": "#93000a",
+          "tertiary": "#00dbe7",
+          "surface-tint": "#b8c3ff",
+          "on-secondary": "#3c0091",
+          "inverse-surface": "#e5e2e1",
+          "background": "#131313",
+          "secondary": "#d0bcff",
+          "on-error": "#690005",
+          "secondary-container": "#571bc1",
+          "tertiary-fixed-dim": "#00dbe7",
+          "secondary-fixed-dim": "#d0bcff",
+          "inverse-primary": "#104af0",
+          "on-primary-fixed": "#001355",
+          "tertiary-container": "#007980",
+          "surface-dim": "#131313",
+          "surface": "#131313",
+          "on-tertiary-fixed-variant": "#004f54",
+          "primary-fixed": "#dde1ff",
+          "inverse-on-surface": "#313030",
+          "on-secondary-container": "#c4abff",
+          "surface-container-highest": "#353534",
+          "primary-fixed-dim": "#b8c3ff",
+          "outline": "#8e90a2",
+          "surface-bright": "#3a3939",
+          "on-error-container": "#ffdad6",
+          "surface-container-lowest": "#0e0e0e",
+          "on-primary": "#002387",
+          "on-tertiary": "#00363a",
+          "on-secondary-fixed": "#23005c",
+          "on-surface-variant": "#c4c5d9",
+          "primary": "#b8c3ff",
+          "primary-container": "#2d5bff",
+          "surface-container-low": "#1c1b1b",
+          "on-surface": "#e5e2e1",
+          "on-secondary-fixed-variant": "#5516be",
+          "on-tertiary-fixed": "#002022",
+          "on-primary-container": "#efefff",
+          "secondary-fixed": "#e9ddff",
+          "surface-container-high": "#2a2a2a",
+          "on-background": "#e5e2e1",
+          "tertiary-fixed": "#74f5ff",
+          "on-tertiary-container": "#c0faff",
+          "error": "#ffb4ab"
+        },
+        borderRadius: {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        spacing: {
+          "sm": "12px",
+          "base": "8px",
+          "md": "24px",
+          "container-max": "1200px",
+          "lg": "40px",
+          "xl": "64px",
+          "xs": "4px",
+          "gutter": "24px"
+        },
+        fontFamily: {
+          "body-lg": ["Inter"],
+          "headline-lg": ["Geist"],
+          "label-caps": ["Geist"],
+          "headline-md": ["Geist"],
+          "display-lg": ["Geist"],
+          "body-md": ["Inter"],
+          "code": ["Geist Mono", "monospace"]
+        },
+        fontSize: {
+          "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+          "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+          "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+          "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+          "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+          "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+          "code": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { margin: 0; overflow: hidden; }
+
+  .glass-panel {
+    background: rgba(26, 26, 26, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .grid-bg {
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+  }
+
+  .glow-primary { box-shadow: 0 0 12px 2px rgba(184,195,255,0.3); }
+  .glow-tertiary { box-shadow: 0 0 12px 2px rgba(0,219,231,0.3); }
+
+  .tab-active {
+    background: rgba(184,195,255,0.1) !important;
+    border-color: rgba(184,195,255,0.3) !important;
+    color: #b8c3ff !important;
+  }
+
+  .op-active {
+    background: rgba(184,195,255,0.08) !important;
+    border-color: rgba(184,195,255,0.2) !important;
+    color: #b8c3ff !important;
+  }
+
+  ::-webkit-scrollbar { width: 3px; height: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+
+  input, select {
+    background: rgba(8,8,8,0.85) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    color: #e5e2e1 !important;
+    border-radius: 0.5rem;
+    padding: 7px 10px;
+    font-size: 13px;
+    font-family: 'Geist Mono', monospace;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus, select:focus {
+    border-color: rgba(184,195,255,0.4) !important;
+    box-shadow: 0 0 0 2px rgba(184,195,255,0.08);
+  }
+  input::placeholder { color: rgba(142,144,162,0.5); }
+  select option { background: #1c1b1b; color: #e5e2e1; }
+
+  .speedup-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #2d5bff, #b8c3ff);
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .before-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255,180,171,0.5);
+  }
+
+  .pulse-dot { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  tr:hover { background: rgba(255,255,255,0.02); }
+
+  .metric-card:hover .metric-icon { color: var(--hover-color); }
+</style>
+</head>
+
+<body class="bg-background text-on-surface h-screen w-full flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container">
+
+<!-- ══════════════════════════════════════════════════ HEADER -->
+<header class="bg-surface border-b border-white/10 flex justify-between items-center w-full px-xl h-16 shrink-0 z-50">
+  <div class="flex items-center gap-md">
+    <div>
+      <div class="flex items-center gap-sm">
+        <h1 class="font-headline-md text-headline-md font-bold tracking-tight text-primary" style="line-height:1">HUBLOG OS</h1>
+        <span class="font-code text-[11px] text-outline-variant border border-white/10 rounded px-xs py-[2px] uppercase tracking-widest">v1.0</span>
+      </div>
+      <p class="font-label-caps text-label-caps text-outline-variant uppercase tracking-widest" style="font-size:10px;margin-top:2px">
+        RotaVerde Logística · Reestruturação de Estruturas de Dados
+      </p>
+    </div>
+
+    <div class="flex items-center gap-xs px-sm py-xs rounded-full bg-tertiary-container/20 border border-tertiary/30 ml-md">
+      <span class="w-2 h-2 rounded-full bg-tertiary pulse-dot"></span>
+      <span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest">SISTEMA OPERANTE</span>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-lg text-on-surface-variant">
+    <div class="text-right">
+      <div class="font-label-caps text-label-caps text-outline-variant uppercase tracking-wider" style="font-size:10px">STATUS DA API</div>
+      <div id="api-status" class="font-code text-code text-outline">Verificando...</div>
+    </div>
+    <div class="w-px h-8 bg-white/10"></div>
+    <span class="font-code text-code text-on-surface-variant" id="clock">00:00:00 UTC</span>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════ MAIN -->
+<main class="flex-1 px-md pt-md pb-sm flex flex-col gap-md min-h-0 overflow-hidden">
+
+  <!-- ── METRIC CARDS ───────────────────────────────────────── -->
+  <section class="grid grid-cols-4 gap-gutter shrink-0">
+
+    <!-- Clientes -->
+    <div class="glass-panel rounded-lg p-md relative overflow-hidden group cursor-pointer metric-card" onclick="switchOp('cliente')">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="flex justify-between items-start mb-sm relative z-10">
+        <span class="font-label-caps text-label-caps text-outline uppercase tracking-wider" style="font-size:10px">Clientes Cadastrados</span>
+        <span class="material-symbols-outlined text-outline-variant metric-icon transition-colors" style="font-size:18px;font-variation-settings:'wght' 200;--hover-color:#b8c3ff">group</span>
+      </div>
+      <div class="flex items-baseline gap-xs relative z-10">
+        <span id="metric-clientes" class="font-display-lg text-display-lg text-on-surface font-light tracking-tight">—</span>
+      </div>
+      <div class="mt-xs relative z-10">
+        <span class="font-code text-primary uppercase tracking-wider" style="font-size:10px">Hash Map (dict) · Busca O(1)</span>
+      </div>
+    </div>
+
+    <!-- Produtos -->
+    <div class="glass-panel rounded-lg p-md relative overflow-hidden group cursor-pointer metric-card" onclick="switchOp('produto')">
+      <div class="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="flex justify-between items-start mb-sm relative z-10">
+        <span class="font-label-caps text-label-caps text-outline uppercase tracking-wider" style="font-size:10px">Produtos no Catálogo</span>
+        <span class="material-symbols-outlined text-outline-variant metric-icon transition-colors" style="font-size:18px;font-variation-settings:'wght' 200">inventory_2</span>
+      </div>
+      <div class="flex items-baseline gap-xs relative z-10">
+        <span id="metric-produtos" class="font-display-lg text-display-lg text-on-surface font-light tracking-tight">—</span>
+      </div>
+      <div class="mt-xs relative z-10">
+        <span class="font-code text-secondary uppercase tracking-wider" style="font-size:10px">Set + Dict · Duplicata O(1)</span>
+      </div>
+    </div>
+
+    <!-- Pedidos na Fila -->
+    <div class="glass-panel rounded-lg p-md relative overflow-hidden group cursor-pointer metric-card" onclick="switchOp('pedido')">
+      <div class="absolute inset-0 bg-gradient-to-br from-tertiary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="flex justify-between items-start mb-sm relative z-10">
+        <span class="font-label-caps text-label-caps text-outline uppercase tracking-wider" style="font-size:10px">Pedidos na Fila</span>
+        <span class="material-symbols-outlined text-outline-variant metric-icon transition-colors" style="font-size:18px;font-variation-settings:'wght' 200">local_shipping</span>
+      </div>
+      <div class="flex items-baseline gap-xs relative z-10">
+        <span id="metric-pedidos" class="font-display-lg text-display-lg text-on-surface font-light tracking-tight">—</span>
+      </div>
+      <div class="mt-xs relative z-10">
+        <span class="font-code text-tertiary uppercase tracking-wider" style="font-size:10px">Min-Heap (heapq) · Extração O(log n)</span>
+      </div>
+    </div>
+
+    <!-- Histórico -->
+    <div class="glass-panel rounded-lg p-md relative overflow-hidden group cursor-pointer metric-card" onclick="switchOp('undo')">
+      <div class="absolute inset-0 bg-gradient-to-br from-error/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div class="flex justify-between items-start mb-sm relative z-10">
+        <span class="font-label-caps text-label-caps text-outline uppercase tracking-wider" style="font-size:10px">Ações no Histórico</span>
+        <span class="material-symbols-outlined text-outline-variant metric-icon transition-colors" style="font-size:18px;font-variation-settings:'wght' 200">history</span>
+      </div>
+      <div class="flex items-baseline gap-xs relative z-10">
+        <span id="metric-historico" class="font-display-lg text-display-lg text-on-surface font-light tracking-tight">—</span>
+      </div>
+      <div class="mt-xs relative z-10">
+        <span class="font-code text-on-surface-variant uppercase tracking-wider" style="font-size:10px">Pilha LIFO (deque) · Push/Pop O(1)</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── MAIN CONTENT GRID ─────────────────────────────────── -->
+  <section class="grid grid-cols-12 gap-gutter flex-1 min-h-0">
+
+    <!-- LEFT: 8 cols ──────────────────────────────────── -->
+    <div class="col-span-8 flex flex-col gap-md min-h-0">
+
+      <!-- Tab bar -->
+      <div class="glass-panel rounded-lg shrink-0 p-xs flex gap-xs">
+        <button id="tab-benchmark" onclick="switchTab('benchmark')"
+          class="tab-btn flex items-center gap-xs px-sm py-xs rounded border border-transparent font-code text-code text-outline hover:text-primary transition-colors">
+          <span class="material-symbols-outlined" style="font-size:14px;font-variation-settings:'wght' 200">speed</span>
+          Benchmark
+        </button>
+        <button id="tab-complexidade" onclick="switchTab('complexidade')"
+          class="tab-btn flex items-center gap-xs px-sm py-xs rounded border border-transparent font-code text-code text-outline hover:text-primary transition-colors">
+          <span class="material-symbols-outlined" style="font-size:14px;font-variation-settings:'wght' 200">analytics</span>
+          Análise de Complexidade
+        </button>
+        <button id="tab-painel" onclick="switchTab('painel')"
+          class="tab-btn flex items-center gap-xs px-sm py-xs rounded border border-transparent font-code text-code text-outline hover:text-primary transition-colors">
+          <span class="material-symbols-outlined" style="font-size:14px;font-variation-settings:'wght' 200">dashboard</span>
+          Painel Entregador
+        </button>
+      </div>
+
+      <!-- Tab content container -->
+      <div class="glass-panel rounded-lg flex-1 p-md min-h-0 overflow-hidden flex flex-col">
+
+        <!-- ─── TAB: BENCHMARK ─────────────────────── -->
+        <div id="view-benchmark" class="flex flex-col h-full">
+          <div class="flex justify-between items-start mb-md shrink-0">
+            <div>
+              <h2 class="font-headline-md text-headline-md text-on-surface">Benchmark de Performance</h2>
+              <p class="font-code text-code text-outline-variant" style="font-size:12px;margin-top:4px">
+                Cenário: Festival Orgânico da Primavera · 3.200 pedidos em 40 minutos
+              </p>
+            </div>
+            <button id="btn-benchmark" onclick="runBenchmark()"
+              class="flex items-center gap-xs px-sm py-xs bg-primary/10 border border-primary/30 rounded text-primary font-code text-code hover:bg-primary/20 transition-colors">
+              <span class="material-symbols-outlined" style="font-size:16px;font-variation-settings:'wght' 200">play_arrow</span>
+              Executar
+            </button>
+          </div>
+
+          <!-- Placeholder -->
+          <div id="benchmark-placeholder" class="flex-1 flex items-center justify-center flex-col gap-md text-outline">
+            <span class="material-symbols-outlined" style="font-size:56px;font-variation-settings:'wght' 100;opacity:0.3">bolt</span>
+            <div class="text-center">
+              <p class="font-code text-code text-outline">Pressione "Executar" para medir a performance real</p>
+              <p class="font-code text-outline-variant" style="font-size:11px;margin-top:4px">Conectado à API FastAPI — dados em tempo real</p>
+            </div>
+          </div>
+
+          <!-- Results (hidden until benchmark runs) -->
+          <div id="benchmark-results" class="hidden flex-1 overflow-y-auto flex-col gap-md">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <!-- ─── TAB: COMPLEXIDADE ──────────────────── -->
+        <div id="view-complexidade" class="hidden flex-col h-full">
+          <div class="flex justify-between items-center mb-md shrink-0">
+            <div>
+              <h2 class="font-headline-md text-headline-md text-on-surface">Análise de Complexidade — Antes vs Depois</h2>
+              <p class="font-code text-code text-outline-variant" style="font-size:12px;margin-top:4px">
+                6 módulos reestruturados · HubLog RotaVerde
+              </p>
+            </div>
+          </div>
+          <div class="flex-1 overflow-y-auto">
+            <table class="w-full border-collapse">
+              <thead>
+                <tr class="border-b border-white/10">
+                  <th class="text-left py-sm px-sm font-label-caps text-label-caps text-outline uppercase tracking-wider" style="font-size:10px">Módulo</th>
+                  <th class="text-left py-sm px-sm font-label-caps text-label-caps text-outline uppercase tracking-wider" style="font-size:10px">Estrutura Anterior</th>
+                  <th class="text-left py-sm px-sm font-label-caps text-label-caps text-outline uppercase tracking-wider" style="font-size:10px">Estrutura Proposta</th>
+                  <th class="text-left py-sm px-sm font-label-caps text-label-caps text-outline uppercase tracking-wider" style="font-size:10px">Operação Crítica</th>
+                  <th class="text-center py-sm px-sm font-label-caps text-label-caps text-error uppercase tracking-wider" style="font-size:10px">Antes</th>
+                  <th class="text-center py-sm px-sm font-label-caps text-label-caps text-tertiary uppercase tracking-wider" style="font-size:10px">Depois</th>
+                  <th class="text-center py-sm px-sm font-label-caps text-label-caps text-outline uppercase tracking-wider" style="font-size:10px">Ganho</th>
+                </tr>
+              </thead>
+              <tbody id="complexity-body">
+                <!-- populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ─── TAB: PAINEL ENTREGADOR ────────────── -->
+        <div id="view-painel" class="hidden flex-col h-full">
+          <div class="flex justify-between items-center mb-md shrink-0">
+            <div>
+              <h2 class="font-headline-md text-headline-md text-on-surface">Painel do Entregador</h2>
+              <p class="font-code text-code text-outline-variant" style="font-size:12px;margin-top:4px">
+                Ordenação por prioridade · Timsort O(n log n) · substituindo Bubble Sort O(n²)
+              </p>
+            </div>
+            <div class="flex gap-xs">
+              <button onclick="loadPanel()"
+                class="flex items-center gap-xs px-sm py-xs border border-white/10 rounded text-outline font-code text-code hover:text-primary hover:border-primary/30 transition-colors">
+                <span class="material-symbols-outlined" style="font-size:14px">refresh</span>
+                Atualizar
+              </button>
+              <button onclick="extractNext()"
+                class="flex items-center gap-xs px-sm py-xs bg-tertiary/10 border border-tertiary/30 rounded text-tertiary font-code text-code hover:bg-tertiary/20 transition-colors">
+                <span class="material-symbols-outlined" style="font-size:14px">skip_next</span>
+                Extrair Próximo
+              </button>
+            </div>
+          </div>
+          <div id="painel-list" class="flex-1 overflow-y-auto flex flex-col gap-xs">
+            <div class="flex items-center justify-center h-full">
+              <p class="font-code text-code text-outline">Nenhum pedido na fila. Insira pedidos para visualizar.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT: 4 cols ─────────────────────────────────── -->
+    <div class="col-span-4 glass-panel rounded-lg p-md flex flex-col overflow-hidden min-h-0">
+
+      <!-- Op header + tab buttons -->
+      <div class="shrink-0 mb-md">
+        <h2 class="font-headline-md text-headline-md text-on-surface" style="margin-bottom:10px">Operações</h2>
+        <div class="grid grid-cols-4 gap-xs">
+          <button id="op-cliente" onclick="switchOp('cliente')"
+            class="op-btn flex flex-col items-center py-xs px-xs rounded border border-transparent font-code text-outline hover:text-primary transition-colors" style="font-size:10px">
+            <span class="material-symbols-outlined" style="font-size:16px;margin-bottom:2px;font-variation-settings:'wght' 200">person_add</span>
+            Cliente
+          </button>
+          <button id="op-produto" onclick="switchOp('produto')"
+            class="op-btn flex flex-col items-center py-xs px-xs rounded border border-transparent font-code text-outline hover:text-secondary transition-colors" style="font-size:10px">
+            <span class="material-symbols-outlined" style="font-size:16px;margin-bottom:2px;font-variation-settings:'wght' 200">add_box</span>
+            Produto
+          </button>
+          <button id="op-pedido" onclick="switchOp('pedido')"
+            class="op-btn flex flex-col items-center py-xs px-xs rounded border border-transparent font-code text-outline hover:text-tertiary transition-colors" style="font-size:10px">
+            <span class="material-symbols-outlined" style="font-size:16px;margin-bottom:2px;font-variation-settings:'wght' 200">add_shopping_cart</span>
+            Pedido
+          </button>
+          <button id="op-undo" onclick="switchOp('undo')"
+            class="op-btn flex flex-col items-center py-xs px-xs rounded border border-transparent font-code text-outline hover:text-error transition-colors" style="font-size:10px">
+            <span class="material-symbols-outlined" style="font-size:16px;margin-bottom:2px;font-variation-settings:'wght' 200">undo</span>
+            Undo
+          </button>
+        </div>
+      </div>
+
+      <!-- Forms -->
+      <div class="shrink-0">
+
+        <!-- FORM: Cliente -->
+        <div id="form-cliente" class="flex flex-col gap-sm">
+          <div class="flex flex-col gap-xs">
+            <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">CPF *</label>
+            <input type="text" id="in-cpf" placeholder="000.000.000-00" maxlength="14"/>
+          </div>
+          <div class="flex flex-col gap-xs">
+            <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">Nome *</label>
+            <input type="text" id="in-nome" placeholder="Nome completo"/>
+          </div>
+          <div class="grid grid-cols-2 gap-sm">
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">Endereço</label>
+              <input type="text" id="in-endereco" placeholder="Rua, bairro"/>
+            </div>
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">Telefone</label>
+              <input type="text" id="in-telefone" placeholder="(98) 9 0000-0000"/>
+            </div>
+          </div>
+          <button onclick="cadastrarCliente()"
+            class="w-full py-xs bg-primary/10 border border-primary/30 rounded text-primary font-code text-code hover:bg-primary/20 transition-colors">
+            Cadastrar — Hash Map O(1)
+          </button>
+        </div>
+
+        <!-- FORM: Produto -->
+        <div id="form-produto" class="hidden flex-col gap-sm">
+          <div class="grid grid-cols-2 gap-sm">
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">ID *</label>
+              <input type="text" id="in-prod-id" placeholder="P-001"/>
+            </div>
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">Nome *</label>
+              <input type="text" id="in-prod-nome" placeholder="Nome do produto"/>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-sm">
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">Preço (R$)</label>
+              <input type="number" id="in-prod-preco" placeholder="0.00" step="0.01" min="0"/>
+            </div>
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">Estoque</label>
+              <input type="number" id="in-prod-estoque" placeholder="0" min="0"/>
+            </div>
+          </div>
+          <button onclick="adicionarProduto()"
+            class="w-full py-xs bg-secondary/10 border border-secondary/30 rounded text-secondary font-code text-code hover:bg-secondary/20 transition-colors">
+            Adicionar — Set+Dict O(1), sem duplicatas
+          </button>
+        </div>
+
+        <!-- FORM: Pedido -->
+        <div id="form-pedido" class="hidden flex-col gap-sm">
+          <div class="grid grid-cols-2 gap-sm">
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">ID do Pedido *</label>
+              <input type="text" id="in-ped-id" placeholder="PED-001"/>
+            </div>
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">CPF do Cliente</label>
+              <input type="text" id="in-ped-cpf" placeholder="000.000.000-00"/>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-sm">
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">Produto ID</label>
+              <input type="text" id="in-ped-prod" placeholder="P-001"/>
+            </div>
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">Quantidade</label>
+              <input type="number" id="in-ped-qtd" value="1" min="1"/>
+            </div>
+          </div>
+          <div class="flex flex-col gap-xs">
+            <label class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px">Prioridade (1 = mais urgente)</label>
+            <select id="in-ped-prioridade">
+              <option value="1">1 — Urgente (ex: perecível)</option>
+              <option value="2">2 — Alta</option>
+              <option value="3" selected>3 — Normal</option>
+              <option value="4">4 — Baixa</option>
+              <option value="5">5 — Mínima</option>
+            </select>
+          </div>
+          <button onclick="inserirPedido()"
+            class="w-full py-xs bg-tertiary/10 border border-tertiary/30 rounded text-tertiary font-code text-code hover:bg-tertiary/20 transition-colors">
+            Inserir no Min-Heap — O(log n)
+          </button>
+        </div>
+
+        <!-- FORM: Undo -->
+        <div id="form-undo" class="hidden flex-col gap-sm">
+          <div class="p-sm rounded-lg bg-white/5 border border-white/10">
+            <div class="font-label-caps text-label-caps text-outline-variant uppercase" style="font-size:10px;margin-bottom:6px">
+              Topo da pilha (última ação):
+            </div>
+            <div id="undo-preview" class="font-code text-code text-outline-variant italic" style="font-size:12px">—</div>
+          </div>
+          <button onclick="desfazerAcao()"
+            class="w-full py-xs bg-error/10 border border-error/30 rounded text-error font-code text-code hover:bg-error/20 transition-colors">
+            Desfazer — LIFO O(1) correto
+          </button>
+          <button onclick="loadUndoPreview()"
+            class="w-full py-xs border border-white/10 rounded text-outline-variant font-code text-code hover:text-primary hover:border-primary/30 transition-colors" style="font-size:12px">
+            Atualizar prévia da pilha
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Divider -->
+      <div class="my-md shrink-0 h-px bg-white/10"></div>
+
+      <!-- Live Operation Log -->
+      <div class="flex-1 min-h-0 flex flex-col overflow-hidden">
+        <div class="flex justify-between items-center mb-sm shrink-0">
+          <span class="font-label-caps text-label-caps text-outline uppercase tracking-wider" style="font-size:10px">Log de Operações</span>
+          <button onclick="clearLog()" class="font-code text-outline-variant hover:text-error transition-colors" style="font-size:10px">Limpar</button>
+        </div>
+        <div id="live-log" class="flex-1 overflow-y-auto flex flex-col gap-xs" style="scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.08) transparent;">
+          <div class="font-code text-outline-variant italic" style="font-size:11px">Aguardando operações...</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- ══════════════════════════════════════════════════ FOOTER -->
+<footer class="bg-surface-container-lowest border-t border-white/5 px-xl flex justify-between items-center h-10 shrink-0 font-code uppercase tracking-wider" style="font-size:11px;color:#8e90a2">
+  <div class="flex items-center gap-md">
+    <span class="flex items-center gap-xs">
+      <span id="conn-dot" class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+      API: localhost:8000
+    </span>
+    <span style="color:rgba(255,255,255,0.15)">|</span>
+    <span>HubLog OS · RotaVerde · 2026.1</span>
+    <span style="color:rgba(255,255,255,0.15)">|</span>
+    <span>HashMap · Set · Heap · Stack LIFO · Dict · Timsort</span>
+  </div>
+  <div class="flex items-center gap-md">
+    <span id="footer-info" style="color:#c4c5d9">—</span>
+    <span style="color:rgba(255,255,255,0.15)">|</span>
+    <span id="clock-footer">00:00:00 UTC</span>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════ SCRIPT -->
+<script>
+// ─────────────────────────── CONFIG
+const API = '';  // same origin (served by FastAPI)
+
+// ─────────────────────────── STATIC DATA
+const COMPLEXITY_ROWS = [
+  {
+    modulo: 'Cadastro de Clientes',
+    antes_struct: 'Lista Sequencial',
+    depois_struct: 'Hash Map (dict)',
+    op: 'Busca por CPF',
+    antes: 'O(n)',
+    depois: 'O(1)',
+    ganho: '8.000x (n=8k)',
+    impact: true,
+  },
+  {
+    modulo: 'Catálogo de Produtos',
+    antes_struct: 'Lista sem controle',
+    depois_struct: 'Set + Dict',
+    op: 'Verificar duplicata',
+    antes: 'O(n)',
+    depois: 'O(1)',
+    ganho: 'n × mais rápido',
+    impact: true,
+  },
+  {
+    modulo: 'Fila de Pedidos',
+    antes_struct: 'Varredura Linear',
+    depois_struct: 'Min-Heap (heapq)',
+    op: 'Extrair mais urgente',
+    antes: 'O(n)',
+    depois: 'O(log n)',
+    ganho: '~275x (n=3.2k)',
+    impact: true,
+  },
+  {
+    modulo: 'Histórico (Undo)',
+    antes_struct: 'Estrutura incorreta',
+    depois_struct: 'Pilha LIFO (deque)',
+    op: 'Desfazer ação',
+    antes: 'O(?) — bug',
+    depois: 'O(1)',
+    ganho: 'Correto agora',
+    impact: false,
+  },
+  {
+    modulo: 'Matriz de Distâncias',
+    antes_struct: 'Lista sem índice',
+    depois_struct: 'Dict Aninhado',
+    op: 'Consulta origem→destino',
+    antes: 'O(n)',
+    depois: 'O(1)',
+    ganho: 'n × mais rápido',
+    impact: false,
+  },
+  {
+    modulo: 'Painel Entregador',
+    antes_struct: 'Bubble Sort',
+    depois_struct: 'Timsort (sorted)',
+    op: 'Ordenar pedidos',
+    antes: 'O(n²)',
+    depois: 'O(n log n)',
+    ganho: '275x (n=3.2k)',
+    impact: true,
+  },
+];
+
+const PRIO_STYLES = {
+  1: { text: 'text-error',   border: 'border-error/30',   bg: 'bg-error/10',    label: 'URGENTE' },
+  2: { text: 'text-error',   border: 'border-error/20',   bg: 'bg-error/5',     label: 'ALTA'    },
+  3: { text: 'text-primary', border: 'border-primary/30', bg: 'bg-primary/5',   label: 'NORMAL'  },
+  4: { text: 'text-outline', border: 'border-white/10',   bg: 'bg-white/5',     label: 'BAIXA'   },
+  5: { text: 'text-outline-variant', border: 'border-white/5', bg: 'bg-white/3', label: 'MÍNIMA' },
+};
+
+// ─────────────────────────── TABS
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active'));
+  document.getElementById('tab-' + tab).classList.add('tab-active');
+
+  ['benchmark', 'complexidade', 'painel'].forEach(t => {
+    const el = document.getElementById('view-' + t);
+    el.classList.toggle('hidden', t !== tab);
+    el.classList.toggle('flex', t === tab);
+  });
+
+  if (tab === 'complexidade') renderComplexidadeTable();
+  if (tab === 'painel') loadPanel();
+}
+
+// ─────────────────────────── OP TABS
+function switchOp(op) {
+  document.querySelectorAll('.op-btn').forEach(b => b.classList.remove('op-active'));
+  const btn = document.getElementById('op-' + op);
+  if (btn) btn.classList.add('op-active');
+
+  ['cliente', 'produto', 'pedido', 'undo'].forEach(o => {
+    const el = document.getElementById('form-' + o);
+    el.classList.toggle('hidden', o !== op);
+    el.classList.toggle('flex', o === op);
+  });
+
+  if (op === 'undo') loadUndoPreview();
+}
+
+// ─────────────────────────── METRICS
+async function loadMetrics() {
+  try {
+    const [cl, pr, ped, hist] = await Promise.all([
+      fetch(API + '/clientes/').then(r => r.json()).catch(() => null),
+      fetch(API + '/produtos/').then(r => r.json()).catch(() => null),
+      fetch(API + '/pedidos/tamanho').then(r => r.json()).catch(() => null),
+      fetch(API + '/historico/profundidade').then(r => r.json()).catch(() => null),
+    ]);
+
+    if (cl)   setText('metric-clientes', cl.total ?? '?');
+    if (pr)   setText('metric-produtos',  pr.total ?? '?');
+    if (ped)  setText('metric-pedidos',   ped.tamanho ?? '?');
+    if (hist) setText('metric-historico', hist.profundidade ?? '?');
+
+    setApiOnline(true);
+  } catch {
+    setApiOnline(false);
+  }
+}
+
+function setApiOnline(ok) {
+  const el = document.getElementById('api-status');
+  const dot = document.getElementById('conn-dot');
+  if (ok) {
+    el.textContent = 'localhost:8000 ● ONLINE';
+    el.style.color = '#00dbe7';
+    dot.style.background = '#00dbe7';
+  } else {
+    el.textContent = 'localhost:8000 ✕ OFFLINE — inicie o uvicorn';
+    el.style.color = '#ffb4ab';
+    dot.style.background = '#ffb4ab';
+  }
+}
+
+// ─────────────────────────── BENCHMARK
+async function runBenchmark() {
+  const btn = document.getElementById('btn-benchmark');
+  btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:14px">hourglass_empty</span> Executando...';
+  btn.disabled = true;
+
+  addLog('Iniciando benchmark — Festival 3.200 pedidos', 'info');
+
+  try {
+    const data = await fetch(API + '/benchmark').then(r => r.json());
+    renderBenchmark(data);
+    addLog('Benchmark concluído com sucesso', 'success');
+    setFooter('Benchmark executado · Festival 3.200 pedidos');
+  } catch (e) {
+    addLog('Erro ao executar benchmark — API offline?', 'error');
+  } finally {
+    btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px;font-variation-settings:\'wght\' 200">play_arrow</span> Executar';
+    btn.disabled = false;
+  }
+}
+
+function renderBenchmark(data) {
+  document.getElementById('benchmark-placeholder').classList.add('hidden');
+  const container = document.getElementById('benchmark-results');
+  container.classList.remove('hidden');
+  container.classList.add('flex');
+
+  const fila = data.fila_pedidos;
+  const busca = data.busca_clientes;
+  const ord = data.comparacao_ordenacao;
+
+  const filaSpeedup = parseFloat(fila.speedup) || 1;
+  const buscaSpeedup = parseFloat(busca.speedup) || 1;
+  const filaBarWidth = Math.max(4, Math.round(100 / filaSpeedup));
+  const buscaBarWidth = Math.max(4, Math.round(100 / buscaSpeedup));
+
+  container.innerHTML = `
+    <div class="grid grid-cols-2 gap-md mb-md">
+
+      <!-- Fila de Pedidos -->
+      <div class="p-md rounded-lg" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)">
+        <div class="font-label-caps text-label-caps text-outline uppercase tracking-wider mb-sm" style="font-size:10px">
+          Fila de Pedidos · Extração do Mais Urgente
+        </div>
+        <div class="font-headline-md text-headline-md text-on-surface mb-md">${fila.speedup}</div>
+
+        <div class="flex gap-sm items-center mb-xs">
+          <span class="font-code text-outline-variant w-16 shrink-0" style="font-size:10px">ANTES</span>
+          <div class="flex-1 h-1.5 rounded-full" style="background:rgba(255,255,255,0.05)">
+            <div class="before-bar" style="width:100%"></div>
+          </div>
+          <span class="font-code text-error w-24 text-right" style="font-size:11px">${fila.antes.complexidade} · ${fila.antes.tempo_s}s</span>
+        </div>
+        <div class="flex gap-sm items-center">
+          <span class="font-code text-outline-variant w-16 shrink-0" style="font-size:10px">DEPOIS</span>
+          <div class="flex-1 h-1.5 rounded-full" style="background:rgba(255,255,255,0.05)">
+            <div class="speedup-bar" style="width:${filaBarWidth}%"></div>
+          </div>
+          <span class="font-code text-primary w-24 text-right" style="font-size:11px">${fila.depois.complexidade} · ${fila.depois.tempo_s}s</span>
+        </div>
+        <div class="mt-sm pt-sm" style="border-top:1px solid rgba(255,255,255,0.05)">
+          <span class="font-code text-outline-variant" style="font-size:10px">
+            Antes: ${fila.antes.algoritmo} &nbsp;→&nbsp; Depois: ${fila.depois.algoritmo}
+          </span>
+        </div>
+      </div>
+
+      <!-- Busca de Clientes -->
+      <div class="p-md rounded-lg" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)">
+        <div class="font-label-caps text-label-caps text-outline uppercase tracking-wider mb-sm" style="font-size:10px">
+          Busca de Clientes · 1.000 consultas · 8.000 registros
+        </div>
+        <div class="font-headline-md text-headline-md text-on-surface mb-md">${busca.speedup}</div>
+
+        <div class="flex gap-sm items-center mb-xs">
+          <span class="font-code text-outline-variant w-16 shrink-0" style="font-size:10px">ANTES</span>
+          <div class="flex-1 h-1.5 rounded-full" style="background:rgba(255,255,255,0.05)">
+            <div class="before-bar" style="width:100%"></div>
+          </div>
+          <span class="font-code text-error w-24 text-right" style="font-size:11px">${busca.antes.complexidade} · ${busca.antes.tempo_1000_buscas_s}s</span>
+        </div>
+        <div class="flex gap-sm items-center">
+          <span class="font-code text-outline-variant w-16 shrink-0" style="font-size:10px">DEPOIS</span>
+          <div class="flex-1 h-1.5 rounded-full" style="background:rgba(255,255,255,0.05)">
+            <div class="speedup-bar" style="width:${buscaBarWidth}%"></div>
+          </div>
+          <span class="font-code text-primary w-24 text-right" style="font-size:11px">${busca.depois.complexidade} · ${busca.depois.tempo_1000_buscas_s}s</span>
+        </div>
+        <div class="mt-sm pt-sm" style="border-top:1px solid rgba(255,255,255,0.05)">
+          <span class="font-code text-outline-variant" style="font-size:10px">
+            Antes: ${busca.antes.algoritmo} &nbsp;→&nbsp; Depois: ${busca.depois.algoritmo}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparação de Algoritmos de Ordenação -->
+    <div class="p-md rounded-lg" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)">
+      <div class="font-label-caps text-label-caps text-outline uppercase tracking-wider mb-md" style="font-size:10px">
+        Comparação de Algoritmos de Ordenação — n = 3.200 pedidos
+      </div>
+      <div class="grid grid-cols-3 gap-md">
+        <div class="p-sm rounded-lg" style="background:rgba(255,180,171,0.05);border:1px solid rgba(255,180,171,0.15)">
+          <div class="flex justify-between items-center mb-xs">
+            <span class="font-label-caps text-error uppercase" style="font-size:10px">Bubble Sort</span>
+            <span class="font-code text-outline-variant" style="font-size:10px">Descartado</span>
+          </div>
+          <div class="font-code text-code text-on-surface mb-xs">${ord.bubble_sort.complexidade}</div>
+          <div class="font-code text-error" style="font-size:11px">
+            ${(ord.bubble_sort.operacoes_3200).toLocaleString('pt-BR')} operações
+          </div>
+          <div class="font-code text-outline-variant" style="font-size:10px;margin-top:4px">Pior caso · instável</div>
+        </div>
+
+        <div class="p-sm rounded-lg" style="background:rgba(208,188,255,0.05);border:1px solid rgba(208,188,255,0.15)">
+          <div class="flex justify-between items-center mb-xs">
+            <span class="font-label-caps text-secondary uppercase" style="font-size:10px">Merge Sort</span>
+            <span class="font-code text-outline-variant" style="font-size:10px">Considerado</span>
+          </div>
+          <div class="font-code text-code text-on-surface mb-xs">O(n log n)</div>
+          <div class="font-code text-secondary" style="font-size:11px">~37.200 operações</div>
+          <div class="font-code text-outline-variant" style="font-size:10px;margin-top:4px">Estável · memória O(n)</div>
+        </div>
+
+        <div class="p-sm rounded-lg" style="background:rgba(184,195,255,0.07);border:1px solid rgba(184,195,255,0.2)">
+          <div class="flex justify-between items-center mb-xs">
+            <span class="font-label-caps text-primary uppercase" style="font-size:10px">Timsort ★ Escolhido</span>
+          </div>
+          <div class="font-code text-code text-on-surface mb-xs">${ord.timsort.complexidade}</div>
+          <div class="font-code text-primary" style="font-size:11px">
+            ~${(ord.timsort.operacoes_aprox_3200).toLocaleString('pt-BR')} operações
+          </div>
+          <div class="font-code text-outline-variant" style="font-size:10px;margin-top:4px">Estável · adaptativo · O(n) best</div>
+        </div>
+      </div>
+      <div class="mt-md pt-sm" style="border-top:1px solid rgba(255,255,255,0.05)">
+        <span class="font-code text-outline-variant" style="font-size:11px">${ord.escolha}</span>
+      </div>
+    </div>
+  `;
+}
+
+// ─────────────────────────── COMPLEXITY TABLE
+function renderComplexidadeTable() {
+  const tbody = document.getElementById('complexity-body');
+  tbody.innerHTML = COMPLEXITY_ROWS.map(row => `
+    <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
+      <td style="padding:10px 8px">
+        <div class="font-body-md text-on-surface" style="font-size:13px">${row.modulo}</div>
+      </td>
+      <td style="padding:10px 8px">
+        <span class="font-code text-outline-variant" style="font-size:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:4px;padding:2px 6px">${row.antes_struct}</span>
+      </td>
+      <td style="padding:10px 8px">
+        <span class="font-code text-primary" style="font-size:12px;background:rgba(184,195,255,0.06);border:1px solid rgba(184,195,255,0.2);border-radius:4px;padding:2px 6px">${row.depois_struct}</span>
+      </td>
+      <td style="padding:10px 8px">
+        <span class="font-code text-outline-variant" style="font-size:12px">${row.op}</span>
+      </td>
+      <td style="padding:10px 8px;text-align:center">
+        <span class="font-code font-bold text-error" style="font-size:13px;background:rgba(255,180,171,0.08);border:1px solid rgba(255,180,171,0.2);border-radius:4px;padding:3px 8px">${row.antes}</span>
+      </td>
+      <td style="padding:10px 8px;text-align:center">
+        <span class="font-code font-bold text-tertiary" style="font-size:13px;background:rgba(0,219,231,0.08);border:1px solid rgba(0,219,231,0.2);border-radius:4px;padding:3px 8px">${row.depois}</span>
+      </td>
+      <td style="padding:10px 8px;text-align:center">
+        <span class="font-code ${row.impact ? 'text-primary' : 'text-outline'}" style="font-size:11px">${row.ganho}</span>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ─────────────────────────── PAINEL
+async function loadPanel() {
+  const container = document.getElementById('painel-list');
+  try {
+    const data = await fetch(API + '/painel/').then(r => r.json());
+
+    if (!data.pedidos || data.pedidos.length === 0) {
+      container.innerHTML = `<div class="flex items-center justify-center h-full"><p class="font-code text-code text-outline">Nenhum pedido na fila. Insira pedidos para visualizar.</p></div>`;
+      return;
+    }
+
+    container.innerHTML = data.pedidos.map((p, i) => {
+      const s = PRIO_STYLES[p.prioridade] || PRIO_STYLES[3];
+      const tsStr = p.timestamp ? new Date(p.timestamp * 1000).toLocaleTimeString('pt-BR') : '—';
+      return `
+        <div class="flex gap-sm items-center px-sm py-xs rounded-lg" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05)">
+          <div class="font-code text-outline-variant shrink-0 w-5 text-center" style="font-size:11px">${i + 1}</div>
+          <div class="flex-1 min-w-0">
+            <div class="font-code text-on-surface" style="font-size:13px">${p.pedido_id || 'Pedido #' + (i + 1)}</div>
+            <div class="font-code text-outline-variant" style="font-size:10px">
+              CPF: ${p.cliente_cpf || '—'} · Prod: ${p.produto_id || '—'} · Qtd: ${p.quantidade || '—'} · ${tsStr}
+            </div>
+          </div>
+          <span class="font-code shrink-0 rounded ${s.text} ${s.border} ${s.bg}" style="font-size:10px;border-width:1px;padding:2px 8px;border-style:solid">
+            ${s.label}
+          </span>
+        </div>
+      `;
+    }).join('');
+
+    setFooter(`Painel: ${data.total} pedidos · ${data.algoritmo}`);
+  } catch {
+    container.innerHTML = `<div class="flex items-center justify-center h-full"><p class="font-code text-code text-error">Erro ao carregar painel — API offline?</p></div>`;
+  }
+}
+
+async function extractNext() {
+  try {
+    const data = await fetch(API + '/pedidos/proximo').then(r => r.json());
+    addLog(`Pedido extraído do Heap: ${data.pedido_id} (Prioridade ${data.prioridade}) · O(log n)`, 'success');
+    loadPanel();
+    loadMetrics();
+  } catch {
+    addLog('Fila vazia — nenhum pedido para extrair', 'warning');
+  }
+}
+
+// ─────────────────────────── OPERATIONS
+async function cadastrarCliente() {
+  const cpf  = v('in-cpf');
+  const nome = v('in-nome');
+  if (!cpf || !nome) { addLog('CPF e Nome são obrigatórios', 'error'); return; }
+
+  try {
+    const res = await fetch(API + '/clientes/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cpf, nome, endereco: v('in-endereco') || 'São Luís, MA', telefone: v('in-telefone') || '(98) 9 0000-0000' }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      addLog(`✓ Cliente "${nome}" (${cpf}) cadastrado — Hash Map O(1)`, 'success');
+      clear('in-cpf', 'in-nome', 'in-endereco', 'in-telefone');
+      loadMetrics();
+    } else {
+      addLog(`✗ ${data.detail}`, 'error');
+    }
+  } catch { addLog('Erro de conexão com a API', 'error'); }
+}
+
+async function adicionarProduto() {
+  const produto_id = v('in-prod-id');
+  const nome = v('in-prod-nome');
+  if (!produto_id || !nome) { addLog('ID e Nome são obrigatórios', 'error'); return; }
+
+  try {
+    const res = await fetch(API + '/produtos/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ produto_id, nome, preco: parseFloat(v('in-prod-preco')) || 0, estoque: parseInt(v('in-prod-estoque')) || 0 }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      addLog(`✓ Produto "${nome}" (${produto_id}) adicionado — Set+Dict O(1), sem duplicatas`, 'success');
+      clear('in-prod-id', 'in-prod-nome', 'in-prod-preco', 'in-prod-estoque');
+      loadMetrics();
+    } else {
+      addLog(`✗ ${data.detail}`, 'error');
+    }
+  } catch { addLog('Erro de conexão com a API', 'error'); }
+}
+
+async function inserirPedido() {
+  const pedido_id = v('in-ped-id');
+  if (!pedido_id) { addLog('ID do pedido é obrigatório', 'error'); return; }
+
+  const prioridade = parseInt(document.getElementById('in-ped-prioridade').value);
+  const pLabels = { 1: 'Urgente', 2: 'Alta', 3: 'Normal', 4: 'Baixa', 5: 'Mínima' };
+
+  try {
+    const res = await fetch(API + '/pedidos/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        pedido_id,
+        cliente_cpf: v('in-ped-cpf') || '000.000.000-00',
+        produto_id: v('in-ped-prod') || 'P-001',
+        prioridade,
+        quantidade: parseInt(v('in-ped-qtd')) || 1,
+      }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      addLog(`✓ "${pedido_id}" inserido no Heap — Prioridade ${prioridade} (${pLabels[prioridade]}) · O(log n)`, 'success');
+      clear('in-ped-id', 'in-ped-cpf', 'in-ped-prod');
+      document.getElementById('in-ped-qtd').value = '1';
+      loadMetrics();
+      if (document.getElementById('view-painel').classList.contains('flex')) loadPanel();
+    } else {
+      addLog(`✗ ${data.detail}`, 'error');
+    }
+  } catch { addLog('Erro de conexão com a API', 'error'); }
+}
+
+async function loadUndoPreview() {
+  try {
+    const data = await fetch(API + '/historico/espiar').then(r => r.json());
+    const el = document.getElementById('undo-preview');
+    if (data && data.acao) {
+      const time = new Date(data.ts * 1000).toLocaleTimeString('pt-BR');
+      el.textContent = `"${data.acao}" — registrado às ${time}`;
+      el.style.color = '#e5e2e1';
+      el.style.fontStyle = 'normal';
+    }
+  } catch {
+    const el = document.getElementById('undo-preview');
+    el.textContent = 'Pilha vazia';
+  }
+}
+
+async function desfazerAcao() {
+  try {
+    const res = await fetch(API + '/historico/desfazer', { method: 'POST' });
+    const data = await res.json();
+    if (res.ok) {
+      addLog(`↩ Desfeito: "${data.desfeita.acao}" — LIFO O(1), operação correta`, 'warning');
+      loadUndoPreview();
+      loadMetrics();
+    } else {
+      addLog('Pilha vazia — nenhuma ação para desfazer', 'error');
+    }
+  } catch { addLog('Erro de conexão com a API', 'error'); }
+}
+
+// ─────────────────────────── LOG
+const LOG_STYLE = {
+  info:    'color:#8e90a2',
+  success: 'color:#00dbe7',
+  error:   'color:#ffb4ab',
+  warning: 'color:#d0bcff',
+};
+
+function addLog(message, type) {
+  const log = document.getElementById('live-log');
+  const ph = log.querySelector('.italic');
+  if (ph) ph.remove();
+
+  const time = new Date().toLocaleTimeString('pt-BR', { hour12: false });
+  const entry = document.createElement('div');
+  entry.style.cssText = 'display:flex;gap:8px;align-items:flex-start;font-family:Geist Mono,monospace;font-size:11px;line-height:1.4';
+  entry.innerHTML = `<span style="color:#434656;white-space:nowrap;flex-shrink:0">${time}</span><span style="${LOG_STYLE[type] || LOG_STYLE.info}">${message}</span>`;
+  log.insertBefore(entry, log.firstChild);
+
+  while (log.children.length > 40) log.removeChild(log.lastChild);
+}
+
+function clearLog() {
+  document.getElementById('live-log').innerHTML = '<div class="font-code text-outline-variant italic" style="font-size:11px">Log limpo.</div>';
+}
+
+// ─────────────────────────── UTILS
+function v(id) { return document.getElementById(id).value.trim(); }
+function clear(...ids) { ids.forEach(id => { document.getElementById(id).value = ''; }); }
+function setText(id, val) { document.getElementById(id).textContent = val; }
+function setFooter(msg) { document.getElementById('footer-info').textContent = msg; }
+
+// ─────────────────────────── CLOCK
+function updateClock() {
+  const ts = new Date().toISOString().substr(11, 8) + ' UTC';
+  document.getElementById('clock').textContent = ts;
+  document.getElementById('clock-footer').textContent = ts;
+}
+
+// ─────────────────────────── INIT
+switchTab('benchmark');
+switchOp('cliente');
+loadMetrics();
+setInterval(loadMetrics, 15000);
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+</body>
+</html>

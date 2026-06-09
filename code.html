@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUARK RESEARCH OS - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-variant": "#353534",
+                      "on-primary-fixed-variant": "#0035bd",
+                      "outline-variant": "#434656",
+                      "surface-container": "#201f1f",
+                      "error-container": "#93000a",
+                      "tertiary": "#00dbe7",
+                      "surface-tint": "#b8c3ff",
+                      "on-secondary": "#3c0091",
+                      "inverse-surface": "#e5e2e1",
+                      "background": "#131313",
+                      "secondary": "#d0bcff",
+                      "on-error": "#690005",
+                      "secondary-container": "#571bc1",
+                      "tertiary-fixed-dim": "#00dbe7",
+                      "secondary-fixed-dim": "#d0bcff",
+                      "inverse-primary": "#104af0",
+                      "on-primary-fixed": "#001355",
+                      "tertiary-container": "#007980",
+                      "surface-dim": "#131313",
+                      "surface": "#131313",
+                      "on-tertiary-fixed-variant": "#004f54",
+                      "primary-fixed": "#dde1ff",
+                      "inverse-on-surface": "#313030",
+                      "on-secondary-container": "#c4abff",
+                      "surface-container-highest": "#353534",
+                      "primary-fixed-dim": "#b8c3ff",
+                      "outline": "#8e90a2",
+                      "surface-bright": "#3a3939",
+                      "on-error-container": "#ffdad6",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-primary": "#002387",
+                      "on-tertiary": "#00363a",
+                      "on-secondary-fixed": "#23005c",
+                      "on-surface-variant": "#c4c5d9",
+                      "primary": "#b8c3ff",
+                      "primary-container": "#2d5bff",
+                      "surface-container-low": "#1c1b1b",
+                      "on-surface": "#e5e2e1",
+                      "on-secondary-fixed-variant": "#5516be",
+                      "on-tertiary-fixed": "#002022",
+                      "on-primary-container": "#efefff",
+                      "secondary-fixed": "#e9ddff",
+                      "surface-container-high": "#2a2a2a",
+                      "on-background": "#e5e2e1",
+                      "tertiary-fixed": "#74f5ff",
+                      "on-tertiary-container": "#c0faff",
+                      "error": "#ffb4ab"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "12px",
+                      "base": "8px",
+                      "md": "24px",
+                      "container-max": "1200px",
+                      "lg": "40px",
+                      "xl": "64px",
+                      "xs": "4px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "headline-lg": ["Geist"],
+                      "label-caps": ["Geist"],
+                      "headline-md": ["Geist"],
+                      "display-lg": ["Geist"],
+                      "body-md": ["Inter"],
+                      "code": ["Geist Mono", "monospace"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "code": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { margin: 0; overflow: hidden; }
+        .glass-panel {
+            background: rgba(26, 26, 26, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+        .glow-dot {
+            box-shadow: 0 0 12px 2px var(--tw-colors-primary);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen w-full flex flex-col font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar (From JSON Anchor) -->
+<header class="bg-surface dark:bg-surface border-b border-white/10 backdrop-blur-md bg-surface/80 flex justify-between items-center w-full px-xl h-20 shrink-0 z-50">
+<div class="flex items-center gap-md">
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-primary dark:text-primary">QUARK RESEARCH OS</h1>
+<div class="flex items-center gap-base px-sm py-xs rounded-full bg-tertiary-container/20 border border-tertiary/30">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse glow-dot"></span>
+<span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest">SISTEMA OPERANTE</span>
+</div>
+</div>
+<div class="flex items-center gap-sm text-on-surface-variant font-medium">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5 hover:text-tertiary transition-colors duration-200 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined" data-weight="regular">settings</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5 hover:text-tertiary transition-colors duration-200 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined" data-weight="regular">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Dashboard Canvas -->
+<main class="flex-1 p-lg flex flex-col gap-lg min-h-0 w-full max-w-[1920px] mx-auto">
+<!-- Top Metrics Row (4 Cards) -->
+<section class="grid grid-cols-4 gap-gutter shrink-0">
+<!-- Metric 1 -->
+<div class="glass-panel rounded-lg p-md relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="flex justify-between items-start mb-md">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Precisão do Modelo</span>
+<span class="material-symbols-outlined text-outline-variant" style="font-variation-settings: 'wght' 200;">track_changes</span>
+</div>
+<div class="flex items-baseline gap-base">
+<span class="font-display-lg text-display-lg text-on-surface font-light tracking-tight">98.2</span>
+<span class="font-code text-code text-primary">%</span>
+</div>
+<div class="mt-sm flex items-center gap-xs font-code text-code text-tertiary">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+<span>+0.4% var.</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="glass-panel rounded-lg p-md relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="flex justify-between items-start mb-md">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Latência Global</span>
+<span class="material-symbols-outlined text-outline-variant" style="font-variation-settings: 'wght' 200;">speed</span>
+</div>
+<div class="flex items-baseline gap-base">
+<span class="font-display-lg text-display-lg text-on-surface font-light tracking-tight">14</span>
+<span class="font-code text-code text-outline-variant">ms</span>
+</div>
+<div class="mt-sm flex items-center gap-xs font-code text-code text-outline">
+<span class="material-symbols-outlined text-[14px]">horizontal_rule</span>
+<span>Estável</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="glass-panel rounded-lg p-md relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="flex justify-between items-start mb-md">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Processamento Neural</span>
+<span class="material-symbols-outlined text-outline-variant" style="font-variation-settings: 'wght' 200;">memory</span>
+</div>
+<div class="flex items-baseline gap-base">
+<span class="font-display-lg text-display-lg text-on-surface font-light tracking-tight">2.4</span>
+<span class="font-code text-code text-secondary">TFLOPS</span>
+</div>
+<div class="mt-sm flex items-center gap-xs font-code text-code text-secondary">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+<span>Pico detectado</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="glass-panel rounded-lg p-md relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-error/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="flex justify-between items-start mb-md">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Entropia do Sistema</span>
+<span class="material-symbols-outlined text-outline-variant" style="font-variation-settings: 'wght' 200;">blur_on</span>
+</div>
+<div class="flex items-baseline gap-base">
+<span class="font-display-lg text-display-lg text-on-surface font-light tracking-tight">0.04</span>
+<span class="font-code text-code text-outline-variant">Ω</span>
+</div>
+<div class="mt-sm flex items-center gap-xs font-code text-code text-error">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+<span>Limite seguro</span>
+</div>
+</div>
+</section>
+<!-- Center & Right Area (Grid 12 cols) -->
+<section class="grid grid-cols-12 gap-gutter flex-1 min-h-0">
+<!-- Main Data Visualization (60% ~ 8 cols) -->
+<div class="col-span-8 glass-panel rounded-lg p-md flex flex-col relative overflow-hidden">
+<div class="flex justify-between items-center mb-md shrink-0 z-10">
+<h2 class="font-headline-md text-headline-md text-on-surface">Topologia de Rede Neural</h2>
+<div class="flex gap-sm">
+<span class="px-sm py-xs border border-white/10 rounded text-code font-code text-outline hover:text-primary hover:border-primary/50 cursor-pointer transition-colors">1H</span>
+<span class="px-sm py-xs border border-primary/30 bg-primary/10 rounded text-code font-code text-primary cursor-pointer">24H</span>
+<span class="px-sm py-xs border border-white/10 rounded text-code font-code text-outline hover:text-primary hover:border-primary/50 cursor-pointer transition-colors">7D</span>
+</div>
+</div>
+<!-- Simulated Network Graph Canvas -->
+<div class="flex-1 w-full relative grid-bg border border-white/5 rounded-lg overflow-hidden flex items-center justify-center">
+<!-- Decorative Network Elements (CSS only to avoid bloated SVG) -->
+<div class="absolute w-[600px] h-[300px] border border-primary/20 rounded-[100%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-30"></div>
+<div class="absolute w-[400px] h-[150px] border border-tertiary/20 rounded-[100%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-40 rotate-45"></div>
+<!-- Nodes -->
+<div class="absolute top-[30%] left-[20%] w-3 h-3 bg-primary rounded-full glow-dot z-10"></div>
+<div class="absolute top-[60%] left-[30%] w-2 h-2 bg-white rounded-full z-10 opacity-70"></div>
+<div class="absolute top-[45%] left-[50%] w-4 h-4 bg-tertiary rounded-full glow-dot z-10 shadow-[0_0_20px_rgba(0,219,231,0.4)]"></div>
+<div class="absolute top-[25%] left-[70%] w-2 h-2 bg-white rounded-full z-10 opacity-50"></div>
+<div class="absolute top-[70%] left-[75%] w-3 h-3 bg-secondary rounded-full glow-dot z-10"></div>
+<!-- Connecting Lines (simulated via rotated divs) -->
+<div class="absolute top-[37%] left-[21%] w-[180px] h-[1px] bg-gradient-to-r from-primary/50 to-transparent origin-left rotate-[15deg]"></div>
+<div class="absolute top-[46%] left-[51%] w-[200px] h-[1px] bg-gradient-to-r from-tertiary/50 to-transparent origin-left rotate-[-20deg]"></div>
+<div class="absolute top-[61%] left-[31%] w-[150px] h-[1px] bg-gradient-to-r from-white/20 to-tertiary/40 origin-left rotate-[-15deg]"></div>
+<!-- Overlay Gradient to fade edges -->
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(26,26,26,0.8)] pointer-events-none"></div>
+</div>
+</div>
+<!-- AI Insights (40% ~ 4 cols) -->
+<div class="col-span-4 glass-panel rounded-lg p-md flex flex-col overflow-hidden">
+<div class="flex justify-between items-center mb-lg shrink-0">
+<h2 class="font-headline-md text-headline-md text-on-surface">Insights Sintéticos</h2>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'wght' 200;">auto_awesome</span>
+</div>
+<div class="flex-1 flex flex-col gap-md overflow-y-auto pr-sm" style="scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent;">
+<!-- Insight Item -->
+<div class="flex gap-md items-start p-sm rounded bg-white/5 border border-white/5 hover:border-primary/30 transition-colors group">
+<div class="mt-xs">
+<span class="material-symbols-outlined text-tertiary text-[20px]" style="font-variation-settings: 'wght' 200;">trending_up</span>
+</div>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface mb-xs leading-snug">Otimização de cluster B detectada. Eficiência de roteamento aumentada em 12% nas últimas 2 horas.</p>
+<span class="font-code text-code text-outline-variant text-[12px] uppercase">Fonte: Telemetria Core</span>
+</div>
+</div>
+<!-- Insight Item -->
+<div class="flex gap-md items-start p-sm rounded bg-white/5 border border-white/5 hover:border-secondary/30 transition-colors group">
+<div class="mt-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings: 'wght' 200;">model_training</span>
+</div>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface mb-xs leading-snug">Convergência do modelo Alpha-7 atingida antes do previsto. Preparando pipeline para validação cruzada.</p>
+<span class="font-code text-code text-outline-variant text-[12px] uppercase">Fonte: Auto-ML</span>
+</div>
+</div>
+<!-- Insight Item -->
+<div class="flex gap-md items-start p-sm rounded bg-error/5 border border-error/10 hover:border-error/30 transition-colors group">
+<div class="mt-xs">
+<span class="material-symbols-outlined text-error text-[20px]" style="font-variation-settings: 'wght' 200;">sync_problem</span>
+</div>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface mb-xs leading-snug">Pequena anomalia na ingestão de dados da API externa. Mecanismos de fallback acionados com sucesso.</p>
+<span class="font-code text-code text-outline-variant text-[12px] uppercase">Fonte: Monitoramento de Borda</span>
+</div>
+</div>
+<!-- Insight Item -->
+<div class="flex gap-md items-start p-sm rounded bg-white/5 border border-white/5 hover:border-primary/30 transition-colors group">
+<div class="mt-xs">
+<span class="material-symbols-outlined text-outline text-[20px]" style="font-variation-settings: 'wght' 200;">database</span>
+</div>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface mb-xs leading-snug">Compactação de logs em andamento. Espaço projetado a ser liberado: 1.2 TB.</p>
+<span class="font-code text-code text-outline-variant text-[12px] uppercase">Rotina do Sistema</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Base Status Bar -->
+<footer class="bg-surface-container-lowest border-t border-white/5 px-xl py-sm flex justify-between items-center h-12 shrink-0 font-code text-[12px] text-outline uppercase tracking-wider">
+<div class="flex items-center gap-md">
+<span class="flex items-center gap-xs"><span class="w-1.5 h-1.5 rounded-full bg-primary glow-dot"></span> CONNECTION: SECURE (WSS)</span>
+<span class="text-white/20">|</span>
+<span>NODE: Q-OS-MAIN-01</span>
+</div>
+<div class="flex items-center gap-md">
+<span>UPTIME: 99.998%</span>
+<span class="text-white/20">|</span>
+<span class="text-on-surface-variant font-medium" id="clock">00:00:00 UTC</span>
+</div>
+</footer>
+<script>
+        // Simple script for the real-time clock in the footer
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toISOString().substr(11, 8) + ' UTC';
+            document.getElementById('clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body></html>
