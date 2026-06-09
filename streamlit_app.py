@@ -1,8 +1,4 @@
-"""
-HubLog OS — RotaVerde · Streamlit App
-Demonstração interativa das estruturas de dados reestruturadas.
-Deploy: Streamlit Cloud (share.streamlit.io)
-"""
+
 import heapq
 import random
 import time
