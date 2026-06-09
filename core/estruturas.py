@@ -10,13 +10,7 @@ import time
 from collections import deque
 from typing import Any, Optional
 
-
-# =============================================================================
 # MÓDULO 1 — CADASTRO DE CLIENTES
-# Problema atual : Lista sequencial → busca O(n)
-# Solução        : Dicionário (Hash Map) → busca O(1) amortizado
-# =============================================================================
-
 class CadastroClientes:
     """
     Hash Map para armazenamento e consulta de clientes.
@@ -27,7 +21,7 @@ class CadastroClientes:
     """
 
     def __init__(self):
-        self._dados: dict[str, dict] = {}          # chave: cpf (string)
+        self._dados: dict[str, dict] = {}
 
     # O(1) amortizado
     def cadastrar(self, cpf: str, nome: str, endereco: str, telefone: str) -> dict:
@@ -37,7 +31,7 @@ class CadastroClientes:
         self._dados[cpf] = cliente
         return cliente
 
-    # O(1) amortizado — era O(n) na lista sequencial
+    # O(1) amortizado
     def buscar(self, cpf: str) -> Optional[dict]:
         return self._dados.get(cpf)
 
@@ -53,12 +47,8 @@ class CadastroClientes:
         return list(self._dados.values())
 
 
-# =============================================================================
-# MÓDULO 2 — CATÁLOGO DE PRODUTOS
-# Problema atual : Nenhum controle de duplicidade → inconsistências de estoque
-# Solução        : Set (para IDs únicos) + Dict (para dados) → O(1) tudo
-# =============================================================================
 
+# MÓDULO 2 — CATÁLOGO DE PRODUTOS
 class CatalogoProdutos:
     """
     Set de IDs garante unicidade; Dict armazena os dados completos.
@@ -112,12 +102,7 @@ class CatalogoProdutos:
         return len(self._ids)
 
 
-# =============================================================================
 # MÓDULO 3 — FILA DE PEDIDOS DOS ENTREGADORES
-# Problema atual : Varredura completa a cada priorização → O(n) por extração
-# Solução        : Min-Heap (heapq) → extração do mais urgente em O(log n)
-# =============================================================================
-
 class FilaPedidos:
     """
     Min-Heap baseado em (prioridade, timestamp, pedido).
@@ -143,7 +128,7 @@ class FilaPedidos:
         self._counter += 1
         heapq.heappush(self._heap, entry)
 
-    # O(log n) — era O(n) na implementação anterior
+    # O(log n)
     def extrair_mais_urgente(self) -> Optional[dict]:
         if not self._heap:
             return None
@@ -165,12 +150,7 @@ class FilaPedidos:
         return len(self._heap) == 0
 
 
-# =============================================================================
 # MÓDULO 4 — HISTÓRICO DE AÇÕES (DESFAZER / UNDO)
-# Problema atual : Estrutura que não respeita LIFO → operações revertidas erradas
-# Solução        : Pilha (Stack via deque) → LIFO garantido, O(1) em tudo
-# =============================================================================
-
 class HistoricoAcoes:
     """
     Pilha LIFO para histórico de ações do usuário.
@@ -205,12 +185,8 @@ class HistoricoAcoes:
         return len(self._pilha)
 
 
-# =============================================================================
-# MÓDULO 5 — MATRIZ DE DISTÂNCIAS
-# Problema atual : Acesso sem indexação adequada → O(n) por lookup
-# Solução        : Dicionário aninhado (dict de dict) → O(1) por lookup
-# =============================================================================
 
+# MÓDULO 5 — MATRIZ DE DISTÂNCIAS
 class MatrizDistancias:
     """
     Dicionário aninhado indexado por (origem, destino).
@@ -237,22 +213,8 @@ class MatrizDistancias:
         return list(self._matriz.keys())
 
 
-# =============================================================================
-# MÓDULO 6 — ORDENAÇÃO DE PEDIDOS POR PRIORIDADE
-# Problema atual : Bubble Sort → O(n²) recalculado a cada atualização
-# Solução        : Heap Sort (via heapq.nsmallest) → O(n log k)
-#                  Para ranking completo: Timsort (sorted) → O(n log n)
-#
-# Comparação de algoritmos (n = 3200 pedidos):
-#   Bubble Sort : O(n²)      → ~10.240.000 comparações (pior caso)
-#   Merge Sort  : O(n log n) → ~35.200 comparações
-#   Heap Sort   : O(n log n) → ~35.200 comparações  ← escolhido para fila
-#   Timsort     : O(n log n) → ~35.200 comparações, melhor caso O(n)
-#
-# Decisão: Heap (módulo 3) para extração contínua do mais urgente;
-#          Timsort (sorted built-in) para ranking visual do painel.
-# =============================================================================
 
+# MÓDULO 6 — ORDENAÇÃO DE PEDIDOS POR PRIORIDADE
 def ordenar_painel_entregador(pedidos: list[dict]) -> list[dict]:
     """
     Ordena pedidos para exibição no painel.
