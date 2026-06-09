@@ -139,7 +139,6 @@ Veja os arquivos:
 - `core/estruturas.py` — implementação completa dos 6 módulos em Python
 - `main.py` — API FastAPI com todos os endpoints
 - `routers/` — rotas organizadas por domínio
-- `tests/test_estruturas.py` — testes com medição de tempo real
 
 ### Como executar:
 ```bash
