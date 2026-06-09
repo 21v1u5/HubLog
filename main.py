@@ -1,8 +1,4 @@
 """
-HubLog API — RotaVerde
-======================
-FastAPI backend com estruturas de dados reestruturadas.
-
 Para rodar:
     pip install fastapi uvicorn
     uvicorn main:app --reload
